@@ -64,20 +64,28 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision hit)
+    {
+        switch (hit.gameObject.tag)
+        {
+            case "SpeedBoost":
+                moveSpeed = 30f;
+                break;
+            case "JumpBoost":
+                jumpVelocity = 15f;
+                break;
+            case "Ground":
+                jumpVelocity = 5f;
+                moveSpeed = 10f;
+                break;
+        }
+    }
     private bool IsGrounded()
     {
         Vector3 capsuleBottom = new Vector3(_col.bounds.center.x, _col.bounds.min.y, _col.bounds.center.z);
         bool grounded = Physics.CheckCapsule(_col.bounds.center,
             capsuleBottom, distanceToGround, groundLayer,
-                QueryTriggerInteraction.Ignore);
+                   QueryTriggerInteraction.Ignore);
         return grounded;
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.name == "enemy")
-        {
-            _gameManager.HP -= 1;
-        }
     }
 }
