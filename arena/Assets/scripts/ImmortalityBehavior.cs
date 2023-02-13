@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -5,13 +6,25 @@ using UnityEngine;
 
 public class ImmortalityBehavior : MonoBehaviour
 {
-    void OnCollisionEnter(Collision collision)
+    public float ImmortalityDuration = 10f;
+    PlayerBehavior playerBehavior;
+
+    void Awake()
+    {
+        playerBehavior = GameObject.Find("player").GetComponent<PlayerBehavior>();
+    }
+
+    public void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.name == "player")
         {
             Destroy(this.transform.parent.gameObject);
+            UnityEngine.Debug.Log("Immortality!");
 
-            UnityEngine.Debug.Log("Immortality collected!");
+            PlayerBehavior player = collision.gameObject.GetComponent<PlayerBehavior>();
+            /*
+             player.Immortality(this, //immortality code);
+            */
         }
     }
 }

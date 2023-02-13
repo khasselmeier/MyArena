@@ -5,13 +5,25 @@ using UnityEngine;
 
 public class MedPackBehavior : MonoBehaviour
 {
-    void OnCollisionEnter(Collision collision)
+    public float MedPackMultiplier = 2.0f;
+    PlayerBehavior playerBehavior;
+
+    void Awake()
     {
-        if(collision.gameObject.name == "player")
+        playerBehavior = GameObject.Find("player").GetComponent<PlayerBehavior>();
+    }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name == "player")
         {
             Destroy(this.transform.parent.gameObject);
+            UnityEngine.Debug.Log("Med Pack!");
 
-            UnityEngine.Debug.Log("Health pack collected!");
+            PlayerBehavior player = collision.gameObject.GetComponent<PlayerBehavior>();
+            /*
+             player.MedPack( //med pack code):
+            */
         }
     }
 }
