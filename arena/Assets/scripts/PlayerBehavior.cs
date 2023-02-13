@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class PlayerBehavior : MonoBehaviour
 {
-    public float rotateSpeed = 75f;
     public float moveSpeed = 10f;
+    public float rotateSpeed = 75f;
 
     public float jumpVelocity = 5f;
     public float distanceToGround = .1f;
@@ -20,17 +20,17 @@ public class PlayerBehavior : MonoBehaviour
     private float hInput;
     private Rigidbody _rb;
     private CapsuleCollider _col;
-    GameBehavior gameBehavior;
+    private GameBehavior _gameManager;
 
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _col = GetComponent<CapsuleCollider>();
+        _gameManager = GameObject.Find("Game Manager").GetComponent<GameBehavior>();
     }
 
     void Update()
     {
-
         vInput = Input.GetAxis("Vertical") * moveSpeed;
         hInput = Input.GetAxis("Horizontal") * rotateSpeed;
 
@@ -59,24 +59,8 @@ public class PlayerBehavior : MonoBehaviour
                     this.transform.rotation) as GameObject;
 
             Rigidbody bulletRB = newBullet.GetComponent<Rigidbody>();
-            bulletRB.velocity = this.transform.forward * bulletSpeed;
-        }
-    }
 
-    private void OnCollisionEnter(Collision hit)
-    {
-        switch(hit.gameObject.tag)
-        {
-            case "SpeedBoost":
-                moveSpeed = 30f;
-                break;
-            case "JumpBoost":
-                jumpVelocity = 15f;
-                break;
-            case "Ground":
-                jumpVelocity = 5f;
-                moveSpeed = 10f;
-                break;
+            bulletRB.velocity = this.transform.forward * bulletSpeed;
         }
     }
 
@@ -87,5 +71,13 @@ public class PlayerBehavior : MonoBehaviour
             capsuleBottom, distanceToGround, groundLayer,
                 QueryTriggerInteraction.Ignore);
         return grounded;
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name == "enemy")
+        {
+            _gameManager.HP -= 1;
+        }
     }
 }
