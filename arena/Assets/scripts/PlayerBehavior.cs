@@ -50,11 +50,15 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollision(Collision collision)
     {
         if (collision.gameObject.name == "Ground")
         {
             isGrounded = true;
+        }
+        if (collision.gameObject.name == "enemy")
+        {
+            _gameManager.HP -= 1;
         }
     }
 
@@ -84,27 +88,9 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
-    void MoveKinematically()
+    private void OnCollisionEnter(Collision hit)
     {
-        this.transform.Translate(Vector3.forward * vInput * Time.deltaTime);
-        this.transform.Rotate(Vector3.up * hInput * Time.deltaTime);
-    }
-
-    private bool IsGrounded()
-    {
-        Vector3 capsuleBottom = new Vector3(_col.bounds.center.x, _col.bounds.min.y, _col.bounds.center.z);
-        bool grounded = Physics.CheckCapsule(_col.bounds.center, capsuleBottom, distanceToGround, groundLayer, QueryTriggerInteraction.Ignore);
-        return grounded;
-    }
-
-    private void OnCollision(Collision collision)
-    {
-        if (collision.gameObject.name == "enemy")
-        {
-            _gameManager.HP -= 1;
-        }
-
-        switch (collision.gameObject.tag)
+        switch (hit.gameObject.tag)
         {
             case "SpeedBoost":
                 moveSpeed = 30f;
@@ -117,5 +103,18 @@ public class PlayerBehavior : MonoBehaviour
                 moveSpeed = 10f;
                 break;
         }
+    }
+
+    void MoveKinematically()
+    {
+        this.transform.Translate(Vector3.forward * vInput * Time.deltaTime);
+        this.transform.Rotate(Vector3.up * hInput * Time.deltaTime);
+    }
+
+    private bool IsGrounded()
+    {
+        Vector3 capsuleBottom = new Vector3(_col.bounds.center.x, _col.bounds.min.y, _col.bounds.center.z);
+        bool grounded = Physics.CheckCapsule(_col.bounds.center, capsuleBottom, distanceToGround, groundLayer, QueryTriggerInteraction.Ignore);
+        return grounded;
     }
 }
