@@ -29835,7 +29835,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1407441331}
   - component: {fileID: 1407441330}
-  - component: {fileID: 1407441329}
+  - component: {fileID: 1407441332}
   m_Layer: 0
   m_Name: minimap camera
   m_TagString: Untagged
@@ -29843,14 +29843,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1407441329
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1407441328}
-  m_Enabled: 1
 --- !u!20 &1407441330
 Camera:
   m_ObjectHideFlags: 0
@@ -29909,6 +29901,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!114 &1407441332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407441328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e9b42f9637fe2d4294897e885a9b5fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 351024693}
+  MainCamera: {fileID: 963194227}
+  RotateWithPlayer: 1
 --- !u!1001 &1408383136
 PrefabInstance:
   m_ObjectHideFlags: 0
